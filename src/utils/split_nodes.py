@@ -1,6 +1,6 @@
 from typing import List
 from .extract_markdown import * 
-from textnode import TextNode, TextType
+from src.textnode import TextNode, TextType
 
 def check_for_nodes(node, extraction_function: callable, is_image: bool ) -> List[TextNode]:
     to_return = []
@@ -35,7 +35,6 @@ def split_nodes_image(old_nodes : List[TextNode]):
         else: to_return.append(node)
     return to_return
         
-
 def split_nodes_link(old_nodes: List[TextNode]):
     to_return = []
     for node in old_nodes:
