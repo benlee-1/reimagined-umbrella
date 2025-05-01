@@ -17,7 +17,7 @@ def handle_conversion(node, delimiter, text_type):
     return_nodes = []
     for i in range(0, len(stored_strings)):
         segment_text = stored_strings[i]
-
+ 
         if segment_text == "" and i % 2 != 0:
             raise ValueError(f"invalid markdown syntax:empty section between delimiters '{delimiter}'")
         
