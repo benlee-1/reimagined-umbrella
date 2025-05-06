@@ -1,4 +1,4 @@
-from textnode import *
+from src.textnode import TextType, TextNode
 from leafnode import *
 def text_node_to_html_node(text_node: TextNode):
     match text_node.text_type:
@@ -15,5 +15,6 @@ def text_node_to_html_node(text_node: TextNode):
         case TextType.IMAGE:
             return LeafNode("img", "", {"src":text_node.url, "alt":"alt text"})
         case _:
+            print(text_node.text_type)
             raise Exception("Invalid Text Type")
 
