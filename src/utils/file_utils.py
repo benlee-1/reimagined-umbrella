@@ -2,16 +2,9 @@ import os
 import shutil
 
 def copy_static_to_public(source, destination):
-    print(f"Checking if {destination} exists...")
-    print(f"Current working directory: {os.getcwd()}")
-    if not os.path.exists(destination):
-        print(f"Creating {destination} directory...")
-        os.mkdir(destination)
-    elif os.path.exists(destination):
-        print(f"Deleting contents of {destination}...")
+    if os.path.exists(destination):
         shutil.rmtree(destination)
-        print(f"Recreating {destination}...")
-        os.mkdir(destination)
+    os.mkdir(destination)
     
     inner_func(source, destination)
 
