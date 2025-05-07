@@ -36,10 +36,12 @@ def markdown_to_html_node(markdown):
             if tag:
                 children_for_total.append(ParentNode(tag, text_to_children(block)))
         elif block_type == BlockType.QUOTE:
-            block = block.replace('\n', ' ')
-            tag = blocktype_to_tag.get(block_type)
-            if tag:
-                children_for_total.append(ParentNode(tag, text_to_children(block)))
+            cleaned_content = process_quote(block)
+            # Create a single text node for the entire quote
+            text_node = TextNode(cleaned_content, TextType.TEXT)
+            node = ParentNode("blockquote", [text_node_to_html_node(text_node)])
+            children_for_total.append(node)
+
 
     return ParentNode('div', children_for_total)
 
@@ -90,3 +92,29 @@ def handle_ordered_list_block(block):
         item_text = line[dot_index+2:].strip() if dot_index != -1 else line.strip()
         li_nodes.append(ParentNode('li', text_to_children(item_text)))
     return ParentNode('ol', li_nodes)
+
+def process_quote(content):
+    # Split into lines and process each line
+    lines = content.split('\n')
+    cleaned_lines = []
+    
+    for line in lines:
+        # Remove the '>' marker and any leading/trailing whitespace
+        if line.startswith('> '):
+            cleaned_lines.append(line[2:].strip())
+        elif line.startswith('>'):
+            cleaned_lines.append(line[1:].strip())
+        else:
+            cleaned_lines.append(line.strip())
+    
+    # Join the lines with spaces, but only include the actual quote content
+    # Stop at the attribution line (if it exists)
+    quote_content = []
+    for line in cleaned_lines:
+        if line.startswith('--'):  # Attribution line
+            break
+        if line:  # Only add non-empty lines
+            quote_content.append(line.strip(">").strip())
+    
+    # Join with a single space and strip any extra whitespace
+    return ' '.join(quote_content).strip()
