@@ -5,11 +5,10 @@ from utils.generate_pages_recursive import generate_pages_recursive
 import sys
 #./main.sh
 def main():
-    # basepath = sys.argv[1] if sys.argv[1] else "/"
+    basepath = sys.argv[1] if len(sys.argv) > 1 else "/"
     print("page generator started!")
-    copy_static_to_public("static", "public")
-    # generate_page("content/index.md","template.html", "public/index.html")
-    generate_pages_recursive("content", "template.html", "public")
+    copy_static_to_public("static", "docs")
+    generate_pages_recursive("content", "template.html", "docs", basepath)
 
 if __name__ == "__main__":
     main()
