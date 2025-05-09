@@ -8,7 +8,7 @@ def generate_page(from_path, template_path, dest_path):
     with open(from_path, 'r') as f:
         markdown = f.read()
     
-    # Read the template file
+    # Read the template file\
     with open(template_path, 'r') as f:
         template = f.read()
 
